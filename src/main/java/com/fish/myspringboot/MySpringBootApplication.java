@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication // 这个注解被称为元注解，它结合了 @SpringBootConfiguration、@EnableAutoConfiguration 和 @ComponentScan
 public class MySpringBootApplication {
 
-	@RequestMapping("/") // @RequestMapping 注解提供了 “routing” （路由）信息。 它告诉Spring，任何带有 / 路径的HTTP请求都应该被映射到 home 方法
+	@RequestMapping("/demo") // @RequestMapping 注解提供了 “routing” （路由）信息。 它告诉Spring，任何带有 / 路径的HTTP请求都应该被映射到 home 方法
 	String home() {
-		return "hello world";
+		return "demo";
 	}
 
 	public static void main(String[] args) {

@@ -27,7 +27,7 @@ public class MyDataSourceConfiguration {
     /**
      * 配置监控服务器
      * @return 返回监控注册的servlet对象
-     * @author SimpleWu
+     * 因为SpringBoot内置了Servlet容器，所以没有 web.xml 替代方法 ServletRegistrationBean
      */
     @Bean
     public ServletRegistrationBean statViewServlet() {
@@ -48,7 +48,6 @@ public class MyDataSourceConfiguration {
     }
     /**
      * 配置服务过滤器
-     *
      * @return 返回过滤器配置对象
      */
     @Bean

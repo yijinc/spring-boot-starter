@@ -1,5 +1,6 @@
 package com.fish.myspringboot;
 
+import com.fish.myspringboot.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ class MySpringBootApplicationTests {
 
 	@Autowired
 	DataSource dataSource;
+
+	@Autowired
+	UserMapper userMapper;
 
 	@Test
 	void contextLoads() {
@@ -28,6 +32,10 @@ class MySpringBootApplicationTests {
 		System.out.println(connection);
 		// 关闭连接
 		connection.close();
+	}
+	@Test
+	void findUser() {
+		System.out.println(userMapper.findById(1));
 	}
 
 }

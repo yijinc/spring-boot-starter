@@ -16,6 +16,10 @@
         select * from t_user where id = #{id}
     </select>
 
+    <select id="getAllUsers" resultMap="ResultMap">
+        select * from t_user
+    </select>
+
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         insert into t_user(
             name,
@@ -45,4 +49,8 @@
         </set>
         where id = #{id}
     </update>
+
+    <delete id="deleteUser">
+        delete from t_user where id = #{id}
+    </delete>
 </mapper>

@@ -4,6 +4,8 @@ import com.fish.myspringboot.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
 
@@ -12,4 +14,8 @@ public interface UserMapper {
     int updateUser(User user);
 
     int insertUser(User user);
+
+    int deleteUser(@Param("id") int id);
+
+    List<User> getAllUsers();
 }

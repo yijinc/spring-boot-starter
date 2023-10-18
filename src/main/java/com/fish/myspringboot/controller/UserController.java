@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 // import java.util.List;
 
 @RestController
@@ -16,10 +18,10 @@ public class UserController {
     private UserMapper userMapper;
 
     // @RequestMapping 注解用于定义请求 URI 以访问 REST 端点，默认请求方法是 GET
-//    @RequestMapping("/users")
-//    public ResponseEntity<List<User>> getUserList() {
-//        return new ResponseEntity<>(new List(), HttpStatus.OK);
-//    }
+    @RequestMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userMapper.getAllUsers(), HttpStatus.OK);
+    }
 
     // @RequestBody 请求正文
     @RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -42,9 +44,11 @@ public class UserController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<Boolean> delete(@PathVariable("id") String id) {
-//    }
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> delete(@PathVariable("id") String id) {
+        int result = userMapper.deleteUser(Integer.parseInt(id));
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 //
 //    // @RequestParam 从请求 URL 中读取请求参数
 //    @RequestMapping(value = "/user/search")

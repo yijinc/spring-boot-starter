@@ -35,7 +35,7 @@ class MySpringBootApplicationTests {
 	}
 	@Test
 	void findUser() {
-		System.out.println(userMapper.findById(1));
+		System.out.println(userMapper.getById(1));
 	}
 
 }

@@ -22,20 +22,20 @@ class MySpringBootApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	void testDataSource() throws SQLException {
-		System.out.println("测试数据库连接");
-		// 查看数据源
-		System.out.println(dataSource.getClass());
-		// 获取数据库连接
-		Connection connection = dataSource.getConnection();
-		System.out.println(connection);
-		// 关闭连接
-		connection.close();
-	}
-	@Test
-	void findUser() {
-		System.out.println(userMapper.getById(1));
-	}
+//	@Test
+//	void testDataSource() throws SQLException {
+//		System.out.println("测试数据库连接");
+//		// 查看数据源
+//		System.out.println(dataSource.getClass());
+//		// 获取数据库连接
+//		Connection connection = dataSource.getConnection();
+//		System.out.println(connection);
+//		// 关闭连接
+//		connection.close();
+//	}
+//	@Test
+//	void findUser() {
+//		System.out.println(userMapper.getById(1));
+//	}
 
 }

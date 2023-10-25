@@ -6,6 +6,8 @@ hello spring boot
 ### 常用命令
 
 ```bash
+# Maven 生命周期的每一个阶段的具体实现都是由 Maven 插件实现的，通过下面语法执行
+$ mvn [plugin-name]:[goal-name]
 
 # 打印了项目依赖的树状图
 $ mvn dependency:tree 
@@ -14,7 +16,7 @@ $ mvn dependency:tree
 $ mvn spring-boot:run
 
 # rm /target 目录
-$ mvn clean
+$ mvn clean # 生命周期中的clean阶段，由 maven-clean-plugin 来实现
 
 # 打包，生成 target/myproject-0.0.1-SNAPSHOT.jar 文件
 $ mvn package

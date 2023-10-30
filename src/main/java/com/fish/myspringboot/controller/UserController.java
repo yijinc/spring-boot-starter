@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
 import java.util.List;
 
 // import java.util.List;
@@ -35,13 +34,13 @@ public class UserController {
 
     // @PathVariable 路径变量
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable("id") BigInteger id) {
+    public ResponseEntity<User> getUser(@PathVariable("id") long id) {
         User user = userMapper.getById(id);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Boolean> update(@PathVariable("id") BigInteger id, @RequestBody User user) {
+    public ResponseEntity<Boolean> update(@PathVariable("id") long id, @RequestBody User user) {
         user.setId(id);
         user.setUpdateBy("admin");
         int result = userMapper.updateUser(user);
@@ -49,8 +48,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Boolean> delete(@PathVariable("id") String id) {
-        int result = userMapper.deleteUser(Integer.parseInt(id));
+    public ResponseEntity<Boolean> delete(@PathVariable("id") long id) {
+        int result = userMapper.deleteUser(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 //

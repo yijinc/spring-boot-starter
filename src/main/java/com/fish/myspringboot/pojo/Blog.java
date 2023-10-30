@@ -11,11 +11,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Blog {
-    private BigInteger id;
+    private long id;
     private String title;
     private String description;
     private String content;
-    private BigInteger userId;
+    private long userId;
     private Timestamp createTime;
     private Timestamp updateTime;
 }

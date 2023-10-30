@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 // import java.util.List;
@@ -26,20 +27,23 @@ public class UserController {
     // @RequestBody 请求正文
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<Object> createUser(@RequestBody User user) {
+        user.setCreateBy("admin");
+        user.setUpdateBy("admin");
         int result = userMapper.insertUser(user);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     // @PathVariable 路径变量
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable("id") String id) {
-        User user = userMapper.getById(Integer.parseInt(id));
+    public ResponseEntity<User> getUser(@PathVariable("id") BigInteger id) {
+        User user = userMapper.getById(id);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Boolean> update(@PathVariable("id") String id, @RequestBody User user) {
-        user.setId(Integer.parseInt(id));
+    public ResponseEntity<Boolean> update(@PathVariable("id") BigInteger id, @RequestBody User user) {
+        user.setId(id);
+        user.setUpdateBy("admin");
         int result = userMapper.updateUser(user);
         return new ResponseEntity(result, HttpStatus.OK);
     }

@@ -2,55 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fish.myspringboot.mapper.UserMapper">
 
-    <resultMap id="ResultMap" type="User">
-        <id     property="id"       column="id" />
-        <result property="userName" column="name" />
-        <result property="password" column="password" />
-        <result property="email" column="email" />
-        <result property="bio" column="bio" />
-        <result property="createTime" column="create_time" />
-        <result property="updateTime" column="update_time" />
-    </resultMap>
-
-    <select id="getById" resultMap="ResultMap">
+    <select id="getById" resultType="User">
         select * from t_user where id = #{id}
     </select>
 
-    <select id="getAllUsers" resultMap="ResultMap">
-        select * from t_user
+    <select id="getAllUsers" resultType="User">
+        select * from t_user where deleted != 1
     </select>
 
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         insert into t_user(
             name,
+            phone,
             password,
             email,
-            bio,
             create_time,
-            update_time
+            create_by,
+            update_time,
+            update_by
         )values(
-            #{userName},
+            #{name},
+            #{phone},
             #{password},
             #{email},
-            #{bio},
             sysdate(),
-            sysdate()
+            #{createBy},
+            sysdate(),
+            #{updateBy}
         )
     </insert>
 
     <update id="updateUser" parameterType="User">
         update t_user
         <set>
-            <if test="userName != null">name = #{userName},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="phone != null">phone = #{phone},</if>
             <if test="password != null">password = #{password},</if>
             <if test="email != null">email = #{email},</if>
-            <if test="bio != null">bio = #{bio},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
         where id = #{id}
     </update>
 
-    <delete id="deleteUser">
-        delete from t_user where id = #{id}
+    <delete id="deleteUser" parameterType="Long">
+        update t_user set deleted = 1 where id  = #{id}
     </delete>
 </mapper>

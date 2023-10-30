@@ -10,15 +10,12 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Blog {
     private BigInteger id;
-    private String name;
-    private String phone;
-    private String password;
-    private String email;
-    private Boolean deleted;
+    private String title;
+    private String description;
+    private String content;
+    private BigInteger userId;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String createBy;
-    private String updateBy;
 }

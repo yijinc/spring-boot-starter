@@ -51,6 +51,14 @@
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>1.2.14</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.30</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- 引入本地jar包依赖 -->
 <!--		<dependency>-->
 <!--			<groupId>本地jar包 groupId 可自定义</groupId>-->

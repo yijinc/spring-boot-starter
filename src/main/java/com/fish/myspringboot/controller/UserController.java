@@ -1,7 +1,7 @@
 package com.fish.myspringboot.controller;
 
 import com.fish.myspringboot.mapper.UserMapper;
-import com.fish.myspringboot.pojo.User;
+import com.fish.myspringboot.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.fish.myspringboot.mapper;
 
-import com.fish.myspringboot.pojo.User;
+import com.fish.myspringboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

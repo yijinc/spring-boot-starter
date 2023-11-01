@@ -1,15 +1,8 @@
-package com.fish.myspringboot.pojo;
-
-import lombok.AllArgsConstructor;
+package com.fish.myspringboot.entity;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Blog {
     private long id;
     private String title;

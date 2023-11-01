@@ -1,14 +1,8 @@
-package com.fish.myspringboot.pojo;
-
-import lombok.AllArgsConstructor;
+package com.fish.myspringboot.entity;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.sql.Timestamp;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
     private long id;
     private String name;

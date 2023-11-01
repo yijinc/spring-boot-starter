@@ -36,3 +36,9 @@ $ java -jar target/myproject-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ....... . . .
 ........ Started MyApplication in 2.536 seconds (process running for 2.864)
 ```
+
+```bash
+# 其他常用命令
+lsof -i:8080 # 查询指定端口进程
+kill -9 PID # 结束进程
+```

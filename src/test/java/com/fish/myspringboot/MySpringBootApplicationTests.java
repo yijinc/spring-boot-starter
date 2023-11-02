@@ -1,13 +1,11 @@
 package com.fish.myspringboot;
 
-import com.fish.myspringboot.mapper.UserMapper;
+import com.fish.myspringboot.dao.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 @SpringBootTest
 class MySpringBootApplicationTests {

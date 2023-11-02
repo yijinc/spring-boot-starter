@@ -1,4 +1,4 @@
-package com.fish.myspringboot.mapper;
+package com.fish.myspringboot.dao;
 
 import com.fish.myspringboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;

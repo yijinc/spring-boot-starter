@@ -1,6 +1,6 @@
 package com.fish.myspringboot.controller;
 
-import com.fish.myspringboot.mapper.BlogMapper;
+import com.fish.myspringboot.dao.BlogMapper;
 import com.fish.myspringboot.entity.Blog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

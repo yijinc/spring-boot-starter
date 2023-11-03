@@ -42,11 +42,12 @@
     </delete>
 
     <select id="queryBlogs" resultMap="blogResultMap">
-        select b.*, u.name, u.email from t_blog b, t_user u where b.user_id = u.id
-        <trim prefix="and (" suffix=")"  suffixOverrides="or">
-            <if test="title != null and title != ''">b.title like concat('%',#{title},'%') or</if>
-            <if test="description != null and description != ''">b.description like concat('%',#{description},'%') or</if>
-        </trim>
+        select b.*, u.name, u.email from t_blog b
+            left join t_user u on b.user_id = u.id
+        <where>
+            <if test="title != null and title != ''">b.title like concat('%',#{title},'%')</if>
+            <if test="description != null and description != ''">and b.description like concat('%',#{description},'%')</if>
+        </where>
     </select>
 
 

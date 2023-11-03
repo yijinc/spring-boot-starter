@@ -3,13 +3,9 @@ package com.fish.myspringboot.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
 @AllArgsConstructor
-public class ResponseResult<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class ResponseResult<T> {
     private int code;
     private boolean success;
     private String message;

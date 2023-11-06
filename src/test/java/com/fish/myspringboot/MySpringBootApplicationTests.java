@@ -1,11 +1,13 @@
 package com.fish.myspringboot;
 
-import com.fish.myspringboot.dao.UserMapper;
+import com.fish.myspringboot.entity.User;
+import com.fish.myspringboot.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @SpringBootTest
 class MySpringBootApplicationTests {
@@ -35,5 +37,11 @@ class MySpringBootApplicationTests {
 //	void findUser() {
 //		System.out.println(userMapper.getById(1));
 //	}
+
+	@Test
+	void testMybatisPlus() {
+		List<User> userList = userMapper.selectList(null);
+		userList.forEach(System.out::println);
+	}
 
 }

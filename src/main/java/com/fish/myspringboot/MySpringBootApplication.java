@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 // @RestController 和 @RequestMapping 注解是Spring MVC注解（它们不是Spring Boot特有的）
 @RestController // @RestController 注解告诉Spring将返回的结果字符串直接响应给客户端。
 @SpringBootApplication // 这个注解被称为元注解，它结合了 @SpringBootConfiguration、@EnableAutoConfiguration 和 @ComponentScan
-@MapperScan("com.fish.myspringboot.mapper")
 public class MySpringBootApplication {
 
 	@Value("${myApplicationName}")

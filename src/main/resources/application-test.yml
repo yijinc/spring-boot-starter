@@ -18,11 +18,11 @@ spring:
       username: root
       password: root
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.fish.myspringboot.entity
-  configuration:
-    map-underscore-to-camel-case: true
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.fish.myspringboot.entity
+#  configuration:
+#    map-underscore-to-camel-case: true
 
 # debug: true
 trace: true
@@ -30,3 +30,8 @@ trace: true
 logging:
   file:
     path: log/tmp/
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

@@ -12,11 +12,11 @@ import java.util.List;
 @SpringBootTest
 class MySpringBootApplicationTests {
 
-	@Autowired
-	DataSource dataSource;
-
-	@Autowired
-	UserMapper userMapper;
+//	@Autowired
+//	DataSource dataSource;
+//
+//	@Autowired
+//	UserMapper userMapper;
 
 	@Test
 	void contextLoads() {
@@ -38,10 +38,10 @@ class MySpringBootApplicationTests {
 //		System.out.println(userMapper.getById(1));
 //	}
 
-	@Test
-	void testMybatisPlus() {
-		List<User> userList = userMapper.selectList(null);
-		userList.forEach(System.out::println);
-	}
+//	@Test
+//	void testMybatisPlus() {
+//		List<User> userList = userMapper.selectList(null);
+//		userList.forEach(System.out::println);
+//	}
 
 }

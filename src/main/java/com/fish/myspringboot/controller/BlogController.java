@@ -4,15 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fish.myspringboot.mapper.BlogMapper;
-import com.fish.myspringboot.dto.BlogDTO;
 import com.fish.myspringboot.entity.Blog;
 import com.fish.myspringboot.response.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class BlogController {
@@ -24,12 +20,12 @@ public class BlogController {
     public ResponseResult<Page<Blog>> getBlogs(
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "description", required = false) String description,
-            @RequestParam(name = "current", required = false) Long current,
-            @RequestParam(name = "pageSize", required = false) Long pageSize
+            @RequestParam(name = "current", required = false, defaultValue = "1" ) Long current,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Long pageSize
     ) {
         Page<Blog> page = new Page();
-        page.setCurrent(current != null ? current : 1);
-        page.setSize(pageSize != null ? pageSize : 6);
+        page.setCurrent(current);
+        page.setSize(pageSize);
         QueryWrapper<Blog> queryWrapper = new QueryWrapper();
         queryWrapper.like(!StringUtils.isEmpty(title),"title", title)
                 .like(!StringUtils.isEmpty(description), "description", description);

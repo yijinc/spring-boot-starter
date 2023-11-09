@@ -1,6 +1,6 @@
-package com.fish.myspringboot.mapstruct;
+package com.fish.myspringboot.entity.mapstruct;
 
-import com.fish.myspringboot.dto.UserDTO;
+import com.fish.myspringboot.entity.dto.UserDTO;
 import com.fish.myspringboot.entity.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

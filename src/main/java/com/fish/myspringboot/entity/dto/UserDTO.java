@@ -1,4 +1,4 @@
-package com.fish.myspringboot.dto;
+package com.fish.myspringboot.entity.dto;
 
 import lombok.Data;
 

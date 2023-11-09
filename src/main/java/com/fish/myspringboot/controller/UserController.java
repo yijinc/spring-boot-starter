@@ -1,9 +1,9 @@
 package com.fish.myspringboot.controller;
 
-import com.fish.myspringboot.dto.UserDTO;
+import com.fish.myspringboot.entity.dto.UserDTO;
 import com.fish.myspringboot.mapper.UserMapper;
 import com.fish.myspringboot.entity.User;
-import com.fish.myspringboot.mapstruct.UserMapping;
+import com.fish.myspringboot.entity.mapstruct.UserMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

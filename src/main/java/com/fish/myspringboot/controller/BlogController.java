@@ -1,9 +1,11 @@
 package com.fish.myspringboot.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fish.myspringboot.entity.dto.BlogDTO;
+import com.fish.myspringboot.entity.requestParam.BlogQueryParam;
 import com.fish.myspringboot.mapper.BlogMapper;
 import com.fish.myspringboot.entity.Blog;
 import com.fish.myspringboot.response.ResponseResult;
@@ -18,18 +20,14 @@ public class BlogController {
     BlogMapper blogMapper;
 
     @GetMapping("/blogs")
-    public ResponseResult<Page<BlogDTO>> getBlogs(
-            @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "description", required = false) String description,
-            @RequestParam(name = "current", required = false, defaultValue = "1" ) Long current,
-            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Long pageSize
-    ) {
-        Page<Blog> page = new Page();
-        page.setCurrent(current);
-        page.setSize(pageSize);
-        QueryWrapper<Blog> queryWrapper = new QueryWrapper();
-        queryWrapper.like(!StringUtils.isEmpty(title),"title", title)
-                .like(!StringUtils.isEmpty(description), "description", description);
+    public ResponseResult<Page<BlogDTO>> getBlogs(BlogQueryParam params) {
+        Page<BlogDTO> page = new Page();
+        page.setCurrent(params.getCurrent());
+        page.setSize(params.getPageSize());
+        page.addOrder(new OrderItem("id", true));
+        QueryWrapper<BlogQueryParam> queryWrapper = new QueryWrapper();
+        queryWrapper.like(StringUtils.isNotEmpty(params.getTitle()),"title", params.getTitle())
+                .like(StringUtils.isNotEmpty(params.getDescription()), "description", params.getDescription());
 
         return ResponseResult.success(blogMapper.customSelectList(page, queryWrapper));
     }

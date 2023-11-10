@@ -24,7 +24,7 @@ public class BlogController {
         Page<BlogDTO> page = new Page();
         page.setCurrent(params.getCurrent());
         page.setSize(params.getPageSize());
-        page.addOrder(new OrderItem("id", true));
+        page.addOrder(new OrderItem("create_time", false));
         QueryWrapper<BlogQueryParam> queryWrapper = new QueryWrapper();
         queryWrapper.like(StringUtils.isNotEmpty(params.getTitle()),"title", params.getTitle())
                 .like(StringUtils.isNotEmpty(params.getDescription()), "description", params.getDescription());

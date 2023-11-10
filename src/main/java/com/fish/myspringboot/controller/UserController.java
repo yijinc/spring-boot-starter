@@ -1,9 +1,11 @@
 package com.fish.myspringboot.controller;
 
 import com.fish.myspringboot.entity.dto.UserDTO;
+import com.fish.myspringboot.entity.vo.UserVO;
 import com.fish.myspringboot.mapper.UserMapper;
 import com.fish.myspringboot.entity.User;
 import com.fish.myspringboot.entity.mapstruct.UserMapping;
+import com.fish.myspringboot.response.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,11 +55,9 @@ public class UserController {
         int result = userMapper.deleteById(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
-//
-//    // @RequestParam 从请求 URL 中读取请求参数
-//    @RequestMapping(value = "/user/search")
-//    public ResponseEntity<Object> searchUsers(
-//            @RequestParam(value = "name", required = false) String name,
-//            @RequestParam(value = "bio", required = false) String bio) {
-//    }
+
+    @RequestMapping(value = "/user/{id}/blogs", method = RequestMethod.GET)
+    public ResponseResult<UserVO> getUserBlogs(@PathVariable("id") Long id) {
+        return ResponseResult.success(userMapper.queryUsersBlogs(id));
+    }
 }

@@ -3,6 +3,7 @@ package com.fish.myspringboot.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fish.myspringboot.entity.dto.BlogDTO;
 import com.fish.myspringboot.mapper.BlogMapper;
 import com.fish.myspringboot.entity.Blog;
 import com.fish.myspringboot.response.ResponseResult;
@@ -17,7 +18,7 @@ public class BlogController {
     BlogMapper blogMapper;
 
     @GetMapping("/blogs")
-    public ResponseResult<Page<Blog>> getBlogs(
+    public ResponseResult<Page<BlogDTO>> getBlogs(
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "description", required = false) String description,
             @RequestParam(name = "current", required = false, defaultValue = "1" ) Long current,
@@ -29,8 +30,8 @@ public class BlogController {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper();
         queryWrapper.like(!StringUtils.isEmpty(title),"title", title)
                 .like(!StringUtils.isEmpty(description), "description", description);
-        page.setRecords(blogMapper.selectList(page, queryWrapper));
-        return ResponseResult.success(page);
+
+        return ResponseResult.success(blogMapper.customSelectList(page, queryWrapper));
     }
 
     @PostMapping("/blog")

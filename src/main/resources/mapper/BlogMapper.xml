@@ -1,53 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fish.myspringboot.dao.BlogMapper">
+<mapper namespace="com.fish.myspringboot.mapper.BlogMapper">
 
-    <resultMap id="blogResultMap" type="com.fish.myspringboot.dto.BlogDTO">
+    <resultMap id="blogResultMap" type="com.fish.myspringboot.entity.dto.BlogDTO">
         <result property="authorId" column="user_id"/>
         <result property="authorName" column="name" />
         <result property="authorEmail" column="email" />
     </resultMap>
 
-    <insert id="insertBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="id">
-        insert into t_blog(
-            title,
-            description,
-            content,
-            user_id,
-            create_time,
-            update_time
-        )values(
-            #{title},
-            #{description},
-            #{content},
-            #{userId},
-            sysdate(),
-            sysdate()
-        )
-    </insert>
-
-    <update id="updateBlog" parameterType="Blog">
-        update t_blog
-        <set>
-            <if test="title != null">title = #{title},</if>
-            <if test="description != null">description = #{description},</if>
-            <if test="content != null">content = #{content},</if>
-            update_time = sysdate()
-        </set>
-        where id = #{id}
-    </update>
-
-    <delete id="deleteBlog" parameterType="long">
-        delete t_blog where id = #{id}
-    </delete>
-
-    <select id="queryBlogs" resultMap="blogResultMap">
+    <select id="customSelectList" resultMap="blogResultMap">
         select b.*, u.name, u.email from t_blog b
             left join t_user u on b.user_id = u.id
-        <where>
-            <if test="title != null and title != ''">b.title like concat('%',#{title},'%')</if>
-            <if test="description != null and description != ''">and b.description like concat('%',#{description},'%')</if>
-        </where>
+        ${ew.customSqlSegment}
+<!--        <where>-->
+<!--            <if test="title != null and title != ''">b.title like concat('%',#{title},'%')</if>-->
+<!--            <if test="description != null and description != ''">and b.description like concat('%',#{description},'%')</if>-->
+<!--        </where>-->
     </select>
 
 

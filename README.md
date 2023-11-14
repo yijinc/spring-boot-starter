@@ -42,3 +42,8 @@ $ java -jar target/myproject-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 lsof -i:8080 # 查询指定端口进程
 kill -9 PID # 结束进程
 ```
+
+### 接口文档
+接口文档地址：https://apifox.com/apidoc/shared-4d7d28c2-11ea-4a37-928e-814ab208fd61
+idea 安装 [Apifox Helper](https://apifox.com/help/applications-and-plugins/idea/start) 并且设置
+[接口注释规范说明](https://apifox.com/help/applications-and-plugins/idea/advanced-use/annotation-rule)

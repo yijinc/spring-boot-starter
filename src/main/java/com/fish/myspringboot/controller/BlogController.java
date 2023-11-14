@@ -19,6 +19,10 @@ public class BlogController {
     @Autowired
     BlogMapper blogMapper;
 
+    /**
+     * 查询博客
+     * 分页查询博客列表
+     */
     @GetMapping("/blogs")
     public ResponseResult<Page<BlogDTO>> getBlogs(BlogQueryParam params) {
         Page<BlogDTO> page = new Page();
@@ -32,6 +36,10 @@ public class BlogController {
         return ResponseResult.success(blogMapper.customSelectList(page, queryWrapper));
     }
 
+    /**
+     * 新增博客
+     * 新增
+     */
     @PostMapping("/blog")
     public ResponseResult create(@RequestBody Blog blog) {
         blog.setUserId(1111122);
@@ -43,6 +51,10 @@ public class BlogController {
         }
     }
 
+    /**
+     * 删除博客
+     * 删除
+     */
     @DeleteMapping("/blog/{id}")
     public Object delete(@PathVariable("id") long id) {
         int result = blogMapper.deleteById(id);
@@ -53,6 +65,10 @@ public class BlogController {
         }
     }
 
+    /**
+     * 更新博客
+     * 更新
+     */
     @PutMapping("/blog/{id}")
     public Object update(@PathVariable("id") long id, Blog blog) {
         blog.setId(id);

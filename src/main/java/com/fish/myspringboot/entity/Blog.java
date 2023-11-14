@@ -10,10 +10,34 @@ import java.sql.Timestamp;
 public class Blog {
     @TableId(value = "id", type = IdType.AUTO)
     private long id;
+
+    /**
+     * 标题
+     */
     private String title;
+
+    /**
+     * 描述
+     */
     private String description;
+
+    /**
+     * 内容
+     */
     private String content;
+
+    /**
+     * 作者 userId
+     */
     private long userId;
+
+    /**
+     * 创建时间
+     */
     private Timestamp createTime;
+
+    /**
+     * 更新时间
+     */
     private Timestamp updateTime;
 }

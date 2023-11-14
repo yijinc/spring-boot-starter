@@ -16,6 +16,10 @@ import java.io.IOException;
 @RestController
 public class FileController {
 
+    /**
+     * 文件上传
+     * 文件上传
+     */
     @RequestMapping(value="/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String fileUpload(@RequestParam("file") MultipartFile file) throws IOException {
         File convertFile = new File("/Users/y/Downloads" + file.getOriginalFilename());
@@ -26,6 +30,10 @@ public class FileController {
         return "File is upload successfully";
     }
 
+    /**
+     * 文件下载
+     * 根据fileName 下载文件
+     */
     @RequestMapping(value = "/download/{fileName}", method = RequestMethod.GET)
     public ResponseEntity<Object> downloadFile(@PathVariable("fileName") String fileName) throws IOException {
         String filename = "/Users/y/Downloads/" + fileName;

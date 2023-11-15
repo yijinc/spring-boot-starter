@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fish.myspringboot.entity.dto.BlogDTO;
+import com. fish. myspringboot. entity. requestBody. BlogBody;
 import com.fish.myspringboot.entity.requestParam.BlogQueryParam;
 import com.fish.myspringboot.mapper.BlogMapper;
 import com.fish.myspringboot.entity.Blog;
 import com.fish.myspringboot.response.ResponseResult;
+import org. springframework. beans. BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org. springframework. validation. annotation. Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,7 +44,9 @@ public class BlogController {
      * 新增
      */
     @PostMapping("/blog")
-    public ResponseResult create(@RequestBody Blog blog) {
+    public ResponseResult create(@RequestBody @Validated BlogBody body) {
+        Blog blog = new Blog();
+        BeanUtils.copyProperties(body, blog);
         blog.setUserId(1111122);
         int result = blogMapper.insert(blog);
         if (result > 0) {
@@ -70,7 +75,10 @@ public class BlogController {
      * 更新
      */
     @PutMapping("/blog/{id}")
-    public Object update(@PathVariable("id") long id, Blog blog) {
+    public Object update(@PathVariable("id") long id, @RequestBody @Validated BlogBody body) {
+        Blog blog = new Blog();
+        BeanUtils.copyProperties(body, blog);
+        blog.setUserId(1111122);
         blog.setId(id);
         int result = blogMapper.updateById(blog);
         if (result > 0) {

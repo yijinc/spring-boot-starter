@@ -29,11 +29,11 @@ public class ResponseResult<T> {
         return new ResponseResult(ResultCode.ERROR.getCode(), false, message, null);
     }
 
-    public static ResponseResult error(int code, String message) {
-        return new ResponseResult(code, false, message, null);
+    public static ResponseResult error(ResultCode resultCode) {
+        return new ResponseResult(resultCode.getCode(), false, resultCode.getMessage(), null);
     }
 
-    public static <T> ResponseResult<T> error(String message, T data) {
-        return new ResponseResult(ResultCode.ERROR.getCode(), false, message, data);
+    public static <T> ResponseResult<T> error(ResultCode resultCode, T data) {
+        return new ResponseResult(resultCode.getCode(), false, resultCode.getMessage(), data);
     }
 }

@@ -1,21 +1,47 @@
-package com. fish. myspringboot. advice;
+package com.fish.myspringboot.advice;
 
-import com. fish. myspringboot. response. ResponseResult;
-import com. fish. myspringboot. response. ResultCode;
-import org. springframework. validation. FieldError;
-import org. springframework. web. bind. MethodArgumentNotValidException;
-import org. springframework. web. bind. annotation. ExceptionHandler;
-import org. springframework. web. bind. annotation. RestControllerAdvice;
+import com.fish.myspringboot.response.ResponseResult;
+import com.fish.myspringboot.response.ResultCode;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java. util. Map;
-import java. util. stream. Collectors;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandlerAdvice {
 
-    @ExceptionHandler
+    /**
+     * 处理参数校验不通过
+     * */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseResult<Map<String, String>> handleException(MethodArgumentNotValidException e) {
         Map<String, String> errors = e.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
         return ResponseResult.error(ResultCode.BAD_PARAM, errors);
+    }
+
+    /**
+     * 处理 400
+     * */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseResult handleException(HttpMessageNotReadableException e) {
+        return ResponseResult.error(ResultCode.BAD_PARAM);
+    }
+
+    /**
+     * 处理 405
+     * */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseResult handleException(HttpRequestMethodNotSupportedException e) {
+        return ResponseResult.error(ResultCode.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler
+    public ResponseResult handleException(Exception e) {
+        return ResponseResult.error(ResultCode.ERROR);
     }
 }

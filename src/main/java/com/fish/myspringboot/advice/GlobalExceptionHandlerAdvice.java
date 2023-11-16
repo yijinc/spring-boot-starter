@@ -8,6 +8,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +31,15 @@ public class GlobalExceptionHandlerAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseResult handleException(HttpMessageNotReadableException e) {
         return ResponseResult.error(ResultCode.BAD_PARAM);
+    }
+
+    /**
+     * 处理 404
+     * 404错误是不经过Controller的，所以使用@ControllerAdvice无法获取到404错误
+     * */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseResult handleException(NoHandlerFoundException e) {
+        return ResponseResult.error(ResultCode.NOT_FOUND);
     }
 
     /**

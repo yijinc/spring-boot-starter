@@ -26,8 +26,9 @@ public class LoginController {
      * 当使用@Resource时，根据名称注入，注入了 RedisTemplate<Object, Object> Bean
      * 需要指定KeySerializer redisTemplate.setKeySerializer(new StringRedisSerializer())
      * **/
-    @Autowired
+    @Resource
     private RedisTemplate<String, User> redisTemplate;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 

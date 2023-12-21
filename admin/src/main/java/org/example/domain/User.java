@@ -1,83 +1,60 @@
 package org.example.domain;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-
+@Data
+@TableName("t_user")
 public class User implements Serializable {
-    private long id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 用户名
+     */
     private String name;
-    private String password;
+
+    /**
+     * 手机号
+     */
     private String phone;
-    private boolean isDeleted;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 是否删除
+     */
+    private Boolean deleted;
+
+    /**
+     * 创建时间
+     */
     private Timestamp createTime;
+
+    /**
+     * 更新时间
+     */
     private Timestamp updateTime;
 
-    public User() {}
+    /**
+     * 创建人
+     */
+    private String createBy;
 
-    public User(long id, String name, String password, String phone, boolean isDeleted, Timestamp createTime, Timestamp updateTime) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.phone = phone;
-        this.isDeleted = isDeleted;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+    /**
+     * 更新人
+     */
+    private String updateBy;
 }

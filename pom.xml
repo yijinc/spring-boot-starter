@@ -23,6 +23,7 @@
 		<mysql-connector.version>8.0.32</mysql-connector.version>
 		<druid.version>1.2.20</druid.version>
 		<mybatis.plus.starter.version>3.5.4</mybatis.plus.starter.version>
+		<mybatis.spring.version>3.0.3</mybatis.spring.version>
 		<lombok.version>1.18.30</lombok.version>
 		<jose.jwt.version>9.31</jose.jwt.version>
 	</properties>
@@ -50,6 +51,11 @@
 				<groupId>com.baomidou</groupId>
 				<artifactId>mybatis-plus-boot-starter</artifactId>
 				<version>${mybatis.plus.starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.projectlombok</groupId>

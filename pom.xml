@@ -1,159 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.fish</groupId>
-	<artifactId>MySpringBoot</artifactId>
-	<version>0.0.1</version>
-	<packaging>jar</packaging>
+
+	<groupId>org.example</groupId>
+	<artifactId>spring-boot-starter</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>common</module>
+		<module>admin</module>
+	</modules>
+
+	<properties>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.6</version>
-		<!-- 父项目的pom.xml文件的相对路径。相对路径允许你选择一个不同的路径。认值是../pom.xml。Maven首先在构建当前项目的地方寻找父项目的pom，其次在文件系统的这个位置（relativePath位置），在本地仓库，最后在远程仓库寻找父项目的pom。 -->
-		<relativePath/>
+		<version>3.2.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<org.projectlombok.version>1.18.30</org.projectlombok.version>
-		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-	</properties>
-
 	<dependencies>
-<!--		如果两个依赖版本在依赖树里的深度是一样的时候，第一个被声明的依赖将会被使用。-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.14</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${org.projectlombok.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>3.5.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-generator</artifactId>
-			<version>3.5.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity-engine-core</artifactId>
-			<version>2.3</version>
-		</dependency>
-
-
-
-
-		<!-- 引入本地jar包依赖 -->
-<!--		<dependency>-->
-<!--			<groupId>本地jar包 groupId 可自定义</groupId>-->
-<!--			<artifactId>本地jar包 artifactId 可自定义</artifactId>-->
-<!--			<scope>system</scope>-->
-<!--			<systemPath>./lib/xxxjdk.jar 本地文件路径</systemPath>-->
-<!--		</dependency>-->
 	</dependencies>
 
 	<build>
-		<!--	Maven 生命周期的每一个阶段的具体实现都是由 Maven 插件实现的	-->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<!-- See https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html -->
-					<!-- Classpath elements to supply as annotation processor path. If specified, the compiler   -->
-					<!-- will detect annotation processors only in those classpath elements. If omitted, the     -->
-					<!-- default classpath is used to detect annotation processors. The detection itself depends -->
-					<!-- on the configuration of annotationProcessors.                                           -->
-					<!--                                                                                         -->
-					<!-- According to this documentation, the provided dependency processor is not considered!   -->
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.mapstruct</groupId>
-							<artifactId>mapstruct-processor</artifactId>
-							<version>${org.mapstruct.version}</version>
-						</path>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>${org.projectlombok.version}</version>
-						</path>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok-mapstruct-binding</artifactId>
-							<version>${lombok-mapstruct-binding.version}</version>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
-	<!--	Maven 依赖搜索顺序：localRepository ->	centralRepository ->  remoteRepository -->
-	<!--	本地仓库 localRepository: 默认 ${user.home}/.m2/repository	-->
-	<!--	中央仓库	centralRepository: 由 Maven 社区提供，可在	${MAVEN_HOME}/conf/settings 设置 mirrors	 -->
-	<!--	远程仓库	remoteRepository（代理仓库）	-->
-<!--	<repositories>-->
-<!--		<repository>-->
-<!--			<id>alimaven</id>-->
-<!--			<name>aliyun maven</name>-->
-<!--			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
-<!--		</repository>-->
-<!--		<repository>-->
-<!--			<id>central-repos1</id>-->
-<!--			<name>Central Repository 2</name>-->
-<!--			<url>http://repo1.maven.org/maven2/</url>-->
-<!--		</repository>-->
-<!--	</repositories>-->
-
+	<!--使用aliyun的Maven镜像源提升下载速度-->
+	<repositories>
+		<repository>
+			<id>aliyunmaven</id>
+			<name>aliyun</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+		</repository>
+		<repository>
+			<id>central2</id>
+			<name>central2</name>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+	</repositories>
 </project>

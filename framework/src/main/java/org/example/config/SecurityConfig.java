@@ -1,6 +1,9 @@
 package org.example.config;
 
 import jakarta.servlet.DispatcherType;
+import org.example.security.MyAccessDeniedHandler;
+import org.example.security.MyAuthenticationEntryPoint;
+import org.example.security.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import static org.springframework.security.authorization.AuthorizationManagers.allOf;
+
 import static org.springframework.security.authorization.AuthorityAuthorizationManager.hasAuthority;
 import static org.springframework.security.authorization.AuthorityAuthorizationManager.hasRole;
-
+import static org.springframework.security.authorization.AuthorizationManagers.allOf;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -52,6 +55,12 @@ public class SecurityConfig {
                         .requestMatchers("/db/**").access(allOf(hasAuthority("db"), hasRole("ADMIN")))
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(exceptionHandlingConfigurer -> {
+                    // 配置自定义 认证 / 授权 异常处理
+                    exceptionHandlingConfigurer
+                            .authenticationEntryPoint(new MyAuthenticationEntryPoint())
+                            .accessDeniedHandler(new MyAccessDeniedHandler());
+                })
                 // 禁用 csrf（所有非get请求会默认携带参数_csrf 校验）
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(withDefaults())
@@ -70,9 +79,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // 配置 AuthenticationManager bean
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
 }

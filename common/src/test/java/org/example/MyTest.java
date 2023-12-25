@@ -1,7 +1,10 @@
 package org.example;
 
+import com.nimbusds.jose.JSONSerializable;
+import com.nimbusds.jose.util.JSONObjectUtils;
 import org.example.util.JwtUtil;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.json.JacksonJsonParser;
 
 
 public class MyTest {
@@ -21,5 +24,10 @@ public class MyTest {
         System.out.println("origin text: " + origin);
 
         System.out.println(JwtUtil.isValid(token));
+    }
+
+    @Test
+    public void testJson() {
+
     }
 }

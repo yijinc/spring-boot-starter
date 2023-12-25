@@ -2,7 +2,7 @@ package org.example.controller;
 
 import jakarta.annotation.Resource;
 import org.example.domain.ResponseResult;
-import org.example.domain.User;
+import org.example.domain.entity.User;
 import org.example.dto.LoginParam;
 import org.example.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

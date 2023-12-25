@@ -1,13 +1,12 @@
-package org.example.config;
+package org.example.security.filter;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.domain.User;
+import org.example.domain.model.LoginUser;
 import org.example.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +20,7 @@ import java.util.Objects;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Resource
-    private RedisTemplate<String, User> redisTemplate;
+    private RedisTemplate<String, LoginUser> redisTemplate;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取 token
@@ -31,7 +30,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String userId = JwtUtil.decode(token);
             if (StringUtils.hasText(userId)) {
                 // 从 redis 中获取用户信息
-                User user = redisTemplate.opsForValue().get("login:" + userId);
+                LoginUser user = redisTemplate.opsForValue().get("login:" + userId);
                 if (Objects.nonNull(user)) {
                     // TODO authorities 权限信息
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, null);

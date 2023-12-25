@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.domain.User;
+import org.example.domain.entity.User;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,8 +1,10 @@
-package org.example.advice;
+package org.example.exception;
 
 import org.example.domain.ResponseResult;
 import org.example.enums.StatusCode;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-public class ControllerExceptionHandlerAdvice {
+public class GlobalExceptionHandler {
 
     /**
      * 处理参数校验不通过
@@ -31,6 +33,22 @@ public class ControllerExceptionHandlerAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseResult<?> handleException(HttpMessageNotReadableException e) {
         return ResponseResult.fail(StatusCode.BAD_PARAM);
+    }
+
+    /**
+     * 处理 401
+     * */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseResult<?> handleException(AuthenticationException e) {
+        return ResponseResult.fail(StatusCode.UNAUTHORIZED.getCode(), e.getMessage());
+    }
+
+    /**
+     * 处理 403
+     * */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseResult<?> handleException(AccessDeniedException e) {
+        return ResponseResult.fail(StatusCode.ACCESS_FORBIDDEN.getCode(), e.getMessage());
     }
 
     /**

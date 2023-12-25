@@ -1,41 +1,15 @@
 package org.example.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.example.enums.StatusCode;
 
+@Data
+@AllArgsConstructor
 public class ResponseResult<T> {
     private int code;
     private String message;
     private T data;
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public ResponseResult(int code, String message, T data) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-    }
 
     public static <T> ResponseResult<T> ok(T data) {
         return new ResponseResult<T>(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMessage(), data);
@@ -55,5 +29,9 @@ public class ResponseResult<T> {
 
     public static ResponseResult<?> fail(StatusCode status) {
         return new ResponseResult<>(status.getCode(), status.getMessage(), null);
+    }
+
+    public static <T> ResponseResult<T> fail(StatusCode status, T data) {
+        return new ResponseResult<>(status.getCode(), status.getMessage(), data);
     }
 }

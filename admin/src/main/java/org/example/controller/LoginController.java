@@ -32,7 +32,7 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @RequestMapping(value = "/fish/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     ResponseResult<?> login(@RequestBody LoginParam param) {
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(param.getPhone(), param.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -45,7 +45,7 @@ public class LoginController {
         return ResponseResult.ok(token);
     }
 
-    @RequestMapping(value = "/fish/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     ResponseResult<?> logout() {
         // 获取 SecurityContextHolder userId
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

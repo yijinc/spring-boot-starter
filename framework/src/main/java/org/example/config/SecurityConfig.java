@@ -40,9 +40,17 @@ public class SecurityConfig {
         RequestMatcher printview = (request) -> request.getParameter("print") != null;
         // @formatter:off
         http
+                // 禁用 csrf（所有非get请求会默认携带参数_csrf 校验）
+                .csrf(AbstractHttpConfigurer::disable)
+                // 不使用 session/cookie
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // 禁用/login, /logout 页面，2个路径作为 api接口使用
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                // 路由配置
                 .authorizeHttpRequests((authorize) -> authorize
                         // 接口放行
-                        .requestMatchers("/fish/login", "/home", "/redis/*").permitAll()
+                        .requestMatchers("/login", "/home", "/redis/*").permitAll()
                         //  要求 /user/** 只能被具有 USER 权限的用户访问
                         .requestMatchers("/user/**").hasAuthority("USER")
                         // 按 http 方法授权
@@ -55,18 +63,12 @@ public class SecurityConfig {
                         .requestMatchers("/db/**").access(allOf(hasAuthority("db"), hasRole("ADMIN")))
                         .anyRequest().authenticated()
                 )
+                // 配置自定义 认证 / 授权 异常处理
                 .exceptionHandling(exceptionHandlingConfigurer -> {
-                    // 配置自定义 认证 / 授权 异常处理
                     exceptionHandlingConfigurer
                             .authenticationEntryPoint(new MyAuthenticationEntryPoint())
                             .accessDeniedHandler(new MyAccessDeniedHandler());
                 })
-                // 禁用 csrf（所有非get请求会默认携带参数_csrf 校验）
-                .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults())
-                // 不使用 session/cookie
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 将 jwtAuthenticationTokenFilter 过滤器添加到过滤器链
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         // @formatter:on

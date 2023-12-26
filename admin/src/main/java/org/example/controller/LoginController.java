@@ -35,14 +35,18 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     ResponseResult<?> login(@RequestBody LoginParam param) {
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(param.getPhone(), param.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        if (authentication == null) {
-            return ResponseResult.fail(1501, "登录失败");
+        try {
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            if (authentication == null) {
+                throw new RuntimeException("登录失败");
+            }
+            User user = (User) authentication.getPrincipal();
+            String token = JwtUtil.encode(String.valueOf(user.getId()));
+            redisTemplate.opsForValue().set("login:" + user.getId(), user, JwtUtil.JWT_EXPIRATION, TimeUnit.MILLISECONDS);
+            return ResponseResult.ok(token);
+        } catch (Exception e) {
+            return ResponseResult.fail(411, e.getMessage());
         }
-        User user = (User) authentication.getPrincipal();
-        String token = JwtUtil.encode(String.valueOf(user.getId()));
-        redisTemplate.opsForValue().set("login:" + user.getId(), user, JwtUtil.JWT_EXPIRATION, TimeUnit.MILLISECONDS);
-        return ResponseResult.ok(token);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)

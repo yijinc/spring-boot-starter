@@ -47,7 +47,9 @@ public class LoginService {
         // 记录登录信息
         loginUser.setToken(token);
         loginUser.setLoginIp(IpUtils.getIpAddr());
-        loginUser.setLoginTime(new Date().getTime());
+        long now = new Date().getTime();
+        loginUser.setLoginTime(now);
+        loginUser.setExpireTime(new Date(now + JwtUtil.JWT_EXPIRATION).getTime());
         redisTemplate.opsForValue().set("loginUser:" + userId, loginUser, JwtUtil.JWT_EXPIRATION, TimeUnit.MILLISECONDS);
         return token;
     }

@@ -45,11 +45,6 @@ public class LoginUser implements UserDetails {
     private String loginIp;
 
     /**
-     * 登录地点
-     */
-    private String loginLocation;
-
-    /**
      * 权限列表
      */
     private List<? extends GrantedAuthority> authorities;
@@ -101,6 +96,5 @@ public class LoginUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 }

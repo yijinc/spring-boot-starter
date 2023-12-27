@@ -11,8 +11,16 @@ public class ResponseResult<T> {
     private String message;
     private T data;
 
+    public ResponseResult(StatusCode statusCode) {
+        this.code = statusCode.getCode();
+        this.message = statusCode.getMessage();
+    }
+
+    public static ResponseResult<?> ok() {
+        return new ResponseResult<>(StatusCode.SUCCESS);
+    }
     public static <T> ResponseResult<T> ok(T data) {
-        return new ResponseResult<T>(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMessage(), data);
+        return new ResponseResult<>(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMessage(), data);
     }
 
     public static ResponseResult<?> fail() {

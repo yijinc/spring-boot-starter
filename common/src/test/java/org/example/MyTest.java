@@ -1,15 +1,12 @@
 package org.example;
 
-import com.nimbusds.jose.JSONSerializable;
-import com.nimbusds.jose.util.JSONObjectUtils;
 import org.example.util.JwtUtil;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.json.JacksonJsonParser;
+import java.util.Date;
 
 
 public class MyTest {
-    @Test
-    public void test() {
+
+    public static void test() {
         String token = JwtUtil.encode("hello");
         System.out.println("token: " + token);
         System.out.println("token2: " + JwtUtil.encode("hello"));
@@ -26,8 +23,15 @@ public class MyTest {
         System.out.println(JwtUtil.isValid(token));
     }
 
-    @Test
-    public void testJson() {
+    public static void main(String[] args) {
+//        test();
+
+//        StringBuilder stringBuilder = new StringBuilder("0123345678");
+//        System.out.println(stringBuilder.substring(2,6));
+
+        System.out.println(new Date().getTime());
+        System.out.println(System.currentTimeMillis());
 
     }
+
 }

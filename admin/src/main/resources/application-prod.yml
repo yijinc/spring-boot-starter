@@ -53,3 +53,13 @@ logging:
   file:
     path: log/tmp/
 
+# token配置
+token:
+  prefix: "Bearer "
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz123456
+  # 令牌有效期（默认24 * 60 * 60 * 1000L）
+  expiration: 86400000
+

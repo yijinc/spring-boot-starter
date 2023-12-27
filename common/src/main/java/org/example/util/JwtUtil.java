@@ -16,18 +16,22 @@ public class JwtUtil {
     private JwtUtil() {}
 
     public static String encode(String jsonString) {
+        return encode(jsonString, JWT_SECRET, JWT_EXPIRATION);
+    }
+
+    public static String encode(String jsonString, String secret, long expiration) {
         // Prepare JWT with claims set
         final Date now = new Date();
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .issuer("self")
                 .issueTime(now)
                 .subject(jsonString)
-                .expirationTime(new Date(now.getTime() + JWT_EXPIRATION))
+                .expirationTime(new Date(now.getTime() + expiration))
                 .build();
         SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
         try {
             // Apply the HMAC protection
-            signedJWT.sign(new MACSigner(JWT_SECRET));
+            signedJWT.sign(new MACSigner(secret));
         } catch (JOSEException e) {
             throw new RuntimeException(e);
         }
@@ -55,12 +59,16 @@ public class JwtUtil {
     }
 
     public static boolean isValid(String token) {
+        return isValid(token, JWT_SECRET);
+    }
+
+    public static boolean isValid(String token, String secret) {
         if(token == null || token.isBlank()) {
             return false;
         }
         JWSVerifier verifier = null;
         try {
-            verifier = new MACVerifier(JWT_SECRET);
+            verifier = new MACVerifier(secret);
         } catch (JOSEException e) {
             System.out.println("JOSEException: " + e);
             return false;

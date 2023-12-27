@@ -79,7 +79,7 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getPhone(); // 手机号作为用户名 唯一标识
+        return user.getName();
     }
 
     @Override

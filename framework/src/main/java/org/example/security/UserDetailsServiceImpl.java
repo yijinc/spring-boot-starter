@@ -20,8 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     LoginUserMapper loginUserMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String phone) throws AuthenticationException {
-        User user = loginUserMapper.selectUserByPhone(phone);
+    public UserDetails loadUserByUsername(String username) throws AuthenticationException {
+        User user = loginUserMapper.selectUserByName(username);
         if (Objects.isNull(user)) {
             throw new UserNotFoundException("用户不存在");
         }

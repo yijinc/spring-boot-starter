@@ -1,17 +1,15 @@
 package org.example.security.filter;
 
-import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.domain.model.LoginUser;
-import org.example.util.JwtUtil;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.example.web.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -19,25 +17,14 @@ import java.util.Objects;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    @Resource
-    private RedisTemplate<String, LoginUser> redisTemplate;
+    @Autowired
+    private TokenService tokenService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // 获取 token
-        String token = request.getHeader("token");
-        if (JwtUtil.isValid(token)) {
-            // 解析 token
-            String userId = JwtUtil.decode(token);
-            if (StringUtils.hasText(userId)) {
-                // 从 redis 中获取用户信息
-                LoginUser user = redisTemplate.opsForValue().get("login:" + userId);
-                if (Objects.nonNull(user)) {
-                    // TODO authorities 权限信息
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, null);
-                    // 存入 SecurityContextHolder
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            }
+        LoginUser loginUser = tokenService.getLoginUser(request);
+        if (Objects.nonNull(loginUser)) {
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser,null, null);
+            SecurityContextHolder.getContext().setAuthentication(authentication); // 存入 SecurityContextHolder
         }
         // 放行，继续执行
         filterChain.doFilter(request, response);

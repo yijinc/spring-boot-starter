@@ -16,7 +16,7 @@ import java.util.List;
  * 使用 JsonIgnoreProperties 忽略属性
  * **/
 @Data
-@JsonIgnoreProperties({"enabled", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
+@JsonIgnoreProperties({"username", "password", "enabled", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
 public class LoginUser implements UserDetails {
 
     /**
@@ -49,6 +49,9 @@ public class LoginUser implements UserDetails {
      */
     private List<? extends GrantedAuthority> authorities;
 
+    // for Serialize
+    public LoginUser() {
+    }
     public LoginUser(User user, List<? extends GrantedAuthority> authorities) {
         this.user = user;
         this.authorities = authorities;

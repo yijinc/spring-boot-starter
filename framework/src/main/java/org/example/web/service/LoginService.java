@@ -1,5 +1,6 @@
 package org.example.web.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.domain.entity.User;
 import org.example.domain.model.LoginUser;
 import org.example.mapper.LoginUserMapper;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
+@Slf4j
 @Service
 public class LoginService {
 
@@ -56,6 +58,7 @@ public class LoginService {
         }
         User user = loginUserMapper.selectUserByPhone(phone);
         if (user == null) {
+            log.warn("用户账号不存在 {}", phone);
             throw new RuntimeException("用户账号不存在");
         }
         boolean verified = smsCodeService.verifySmsCode(phone, smsCode, 2);
@@ -81,6 +84,7 @@ public class LoginService {
         }
         User user = loginUserMapper.selectUserByPhone(phone);
         if (user == null) {
+            log.warn("用户账号不存在 {}", phone);
             throw new RuntimeException("用户账号不存在");
         }
         smsCodeService.sendCodeByLogin(phone);

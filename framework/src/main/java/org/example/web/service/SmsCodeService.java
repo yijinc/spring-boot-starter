@@ -1,6 +1,7 @@
 package org.example.web.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.example.domain.entity.SmsCode;
 import org.example.mapper.SmsCodeMapper;
 import org.example.util.RegexUtils;
@@ -12,8 +13,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
 
+@Slf4j
 @Service
 public class SmsCodeService {
+
+    static int EXPIRATION = 60 * 2;
+
     @Autowired
     SmsCodeMapper smsCodeMapper;
 
@@ -32,12 +37,16 @@ public class SmsCodeService {
         }
         // TODO 调第三方发送验证码
         SmsCode smsCode = new SmsCode();
-        smsCode.setVerifyCode(mockGenerate());
+        String code = mockGenerate();
+        smsCode.setVerifyCode(code);
         smsCode.setPhone(phone);
         smsCode.setType(type);
+        smsCode.setAuthStatus(1);
         smsCode.setCreateTime(LocalDateTime.now());
+        log.info("手机号登录：{}，发送验证码为：{}", phone, code);
         int result = smsCodeMapper.insert(smsCode);
         if (result < 1) {
+            log.error("手机号登录：{}，验证码插入失败: {}", phone, code);
             throw new RuntimeException("验证码插入表失败");
         }
     }
@@ -51,8 +60,14 @@ public class SmsCodeService {
                 .eq("phone", phone)
                 .eq("verify_code", verifyCode)
                 .eq("type", type)
-                .ge("create_time", LocalDateTime.now().minusSeconds(-60))
+                .eq("auth_status", 1)
+                .ge("create_time", LocalDateTime.now().minusSeconds(EXPIRATION))
         );
-        return Objects.nonNull(smsCode);
+        if (Objects.nonNull(smsCode)) {
+            smsCode.setAuthStatus(2); // 标记为使用
+            smsCodeMapper.updateById(smsCode);
+            return true;
+        }
+        return false;
     }
 }

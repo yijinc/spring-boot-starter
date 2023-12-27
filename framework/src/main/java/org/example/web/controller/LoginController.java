@@ -36,7 +36,7 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     ResponseResult<?> logout() {
         loginService.logout();
-        return ResponseResult.ok("退出成功");
+        return ResponseResult.ok();
     }
 
     record SMSCodeBody(String phone) {}

@@ -40,10 +40,10 @@ CREATE TABLE `t_blog` (
 CREATE TABLE `t_sms_verify` (
                         `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                         `phone` CHAR(11) NOT NULL COMMENT '手机号码',
-                        `type` tinyint(4) NOT NULL COMMENT '短信类型：1、注册，2、登录；3、找回密码',
+                        `type` SMALLINT(1) NOT NULL COMMENT '短信类型：1、注册，2、登录；3、找回密码',
                         `receipt_code` VARCHAR(20) NULL COMMENT '验证码回执编号',
                         `verify_code` CHAR(6) NULL COMMENT '短信验证码',
-                        `auth_status` tinyint(4) NULL DEFAULT 0 COMMENT '鉴权状态',
+                        `auth_status` SMALLINT(1) NULL DEFAULT 0 COMMENT '鉴权状态',
                         `create_time` TIMESTAMP NOT NULL COMMENT '验证码创建时间',
                         `platform` VARCHAR(20) NULL COMMENT '平台',
                         PRIMARY KEY (`id`)

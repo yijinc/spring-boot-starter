@@ -52,7 +52,19 @@ public class SmsCodeService {
     }
 
     void sendCodeByLogin(String phone) {
-        generateSmsCode(phone, 2);
+        int codeType = 2; // 登录类型验证码
+        // 查询是否已发送验证码，避免重复发送
+        long hasCount = smsCodeMapper.selectCount(new QueryWrapper<SmsCode>()
+                .eq("phone", phone)
+                .eq("type", codeType)
+                .eq("auth_status", 1)
+                .ge("create_time", LocalDateTime.now().minusSeconds(EXPIRATION))
+        );
+        if (hasCount > 0) {
+            log.error("已发送验证码，请勿频繁发送: {}", phone);
+            throw new RuntimeException("已发送验证码，请勿频繁发送");
+        }
+        generateSmsCode(phone, codeType);
     }
 
     public boolean verifySmsCode(String phone, String verifyCode, int type) {

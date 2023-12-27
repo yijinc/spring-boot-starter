@@ -50,8 +50,7 @@ mybatis-plus:
 trace: true
 # 默认所有日志都打印在控制台，如果要打印文件中的日志，需要配置 logging.file 或 logging.path
 logging:
-  file:
-    path: log/tmp/
+  config: classpath:logback.xml
 
 # token配置
 token:

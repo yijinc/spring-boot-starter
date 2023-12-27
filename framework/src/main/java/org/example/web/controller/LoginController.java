@@ -22,9 +22,31 @@ public class LoginController {
         }
     }
 
+    record PhoneLoginBody(String phone, String smsCode) {}
+    @PostMapping("/code/login")
+    ResponseResult<?> loginByCode(@RequestBody PhoneLoginBody body) {
+        try {
+            String token = loginService.loginByPhone(body.phone, body.smsCode);
+            return ResponseResult.ok(token);
+        } catch (Exception e) {
+            return ResponseResult.fail(411, e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     ResponseResult<?> logout() {
         loginService.logout();
         return ResponseResult.ok("退出成功");
+    }
+
+    record SMSCodeBody(String phone) {}
+    @PostMapping("/send/smsCode")
+    ResponseResult<?> loginByCode(@RequestBody SMSCodeBody body) {
+        try {
+            loginService.sendSmsCodeForLogin(body.phone);
+            return ResponseResult.ok();
+        } catch (Exception e) {
+            return ResponseResult.fail(412, e.getMessage());
+        }
     }
 }

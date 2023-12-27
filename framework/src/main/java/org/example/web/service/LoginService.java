@@ -1,6 +1,8 @@
 package org.example.web.service;
 
+import org.example.domain.entity.User;
 import org.example.domain.model.LoginUser;
+import org.example.mapper.LoginUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +23,12 @@ public class LoginService {
     private TokenService tokenService;
 
     @Autowired
+    private SmsCodeService smsCodeService;
+
+    @Autowired
+    private LoginUserMapper loginUserMapper;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     public String login(String username, String password) {
@@ -39,11 +47,42 @@ public class LoginService {
         return tokenService.createTokenAndRecordLoginUser(loginUser);
     }
 
+    public String loginByPhone(String phone, String smsCode) {
+        if (phone == null || phone.isBlank()) {
+            throw new RuntimeException("手机号不能为空");
+        }
+        if (smsCode == null || smsCode.isBlank()) {
+            throw new RuntimeException("验证码不能为空");
+        }
+        User user = loginUserMapper.selectUserByPhone(phone);
+        if (user == null) {
+            throw new RuntimeException("用户账号不存在");
+        }
+        boolean verified = smsCodeService.verifySmsCode(phone, smsCode, 2);
+        if (!verified) {
+            throw new RuntimeException("验证码错误");
+        }
+        // TODO set user Authority
+        LoginUser loginUser = new LoginUser(user, null);
+        return tokenService.createTokenAndRecordLoginUser(loginUser);
+    }
+
     public void logout() {
         // 获取 SecurityContextHolder userId
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         long userId = loginUser.getUser().getId();
         tokenService.removeLoginUser(userId);
+    }
+
+    public void sendSmsCodeForLogin(String phone) {
+        if (phone == null || phone.isBlank()) {
+            throw new RuntimeException("手机号不能为空");
+        }
+        User user = loginUserMapper.selectUserByPhone(phone);
+        if (user == null) {
+            throw new RuntimeException("用户账号不存在");
+        }
+        smsCodeService.sendCodeByLogin(phone);
     }
 }

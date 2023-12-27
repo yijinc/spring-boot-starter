@@ -50,7 +50,7 @@ public class SecurityConfig {
                 // 路由配置
                 .authorizeHttpRequests((authorize) -> authorize
                         // 接口放行
-                        .requestMatchers("/login", "/home", "/redis/*").permitAll()
+                        .requestMatchers("/login", "/code/login", "/send/smsCode").permitAll()
                         //  要求 /user/** 只能被具有 USER 权限的用户访问
                         .requestMatchers("/user/**").hasAuthority("USER")
                         // 按 http 方法授权

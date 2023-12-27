@@ -1,6 +1,8 @@
 # spring-boot-starter
 
-hello spring boot
+使用最新jdk@21 + spring boot@3.2
+包含新特性：record 简单入参
+
 
 
 ### 常用命令
@@ -37,10 +39,17 @@ $ java -jar target/myproject-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ........ Started MyApplication in 2.536 seconds (process running for 2.864)
 ```
 
+### 其他常用命令
+
 ```bash
-# 其他常用命令
+# 端口占用清除
 lsof -i:8080 # 查询指定端口进程
 kill -9 PID # 结束进程
+
+# 连接 redis
+redis-cli -h 127.0.0.1 -p 6379
+auth password
+ping # 连通测试，返回 PONG 表示成功
 ```
 
 ### 接口文档

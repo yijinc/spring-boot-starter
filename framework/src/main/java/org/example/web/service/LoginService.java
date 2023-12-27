@@ -1,6 +1,5 @@
 package org.example.web.service;
 
-import jakarta.annotation.Resource;
 import org.example.domain.model.LoginUser;
 import org.example.util.IpUtils;
 import org.example.util.JwtUtil;
@@ -23,7 +22,7 @@ public class LoginService {
      * 当使用@Resource时，根据名称注入，注入了 RedisTemplate<Object, Object> Bean
      * 需要指定KeySerializer redisTemplate.setKeySerializer(new StringRedisSerializer())
      * **/
-    @Resource
+    @Autowired
     private RedisTemplate<String, LoginUser> redisTemplate;
 
     @Autowired

@@ -4,18 +4,22 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.example.domain.ResponseResult;
 import org.example.domain.entity.Blog;
+import org.example.domain.model.LoginUser;
 import org.example.domain.param.BlogBody;
 import org.example.domain.param.BlogQueryParam;
 import org.example.domain.vo.BlogVO;
 import org.example.mapper.BlogMapper;
 import org. springframework. beans. BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org. springframework. validation. annotation. Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+@Slf4j
 @RestController
 public class BlogController {
 
@@ -28,11 +32,11 @@ public class BlogController {
      */
     @GetMapping("/blogs")
     public ResponseResult<Page<BlogVO>> getBlogs(BlogQueryParam params) {
-        Page<BlogVO> page = new Page();
+        Page<BlogVO> page = new Page<>();
         page.setCurrent(params.getCurrent());
         page.setSize(params.getPageSize());
         page.addOrder(new OrderItem("create_time", false));
-        QueryWrapper<BlogQueryParam> queryWrapper = new QueryWrapper();
+        QueryWrapper<BlogQueryParam> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringUtils.isNotEmpty(params.getTitle()),"title", params.getTitle())
                 .like(StringUtils.isNotEmpty(params.getDescription()), "description", params.getDescription());
 
@@ -44,15 +48,18 @@ public class BlogController {
      * 新增
      */
     @PostMapping("/blog")
-    public ResponseResult create(@RequestBody @Validated BlogBody body) {
+    public ResponseResult<?> create(@RequestBody @Validated BlogBody body) {
         Blog blog = new Blog();
         BeanUtils.copyProperties(body, blog);
-        blog.setUserId(1111122);
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = loginUser.getUser().getId();
+        blog.setUserId(loginUser.getUser().getId());
         int result = blogMapper.insert(blog);
         if (result > 0) {
-            return ResponseResult.ok("新增成功");
+            return ResponseResult.ok();
         } else {
-            return ResponseResult.fail("新增失败");
+            log.error("新增blog 失败：{} by userId={}", blog, userId);
+            return ResponseResult.fail();
         }
     }
 
@@ -62,11 +69,14 @@ public class BlogController {
      */
     @DeleteMapping("/blog/{id}")
     public Object delete(@PathVariable("id") long id) {
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = loginUser.getUser().getId();
         int result = blogMapper.deleteById(id);
         if (result > 0) {
-            return ResponseResult.ok("删除成功");
+            return ResponseResult.ok();
         } else {
-            return ResponseResult.fail("删除失败");
+            log.error("删除 blog 失败：blogId={} by userId={}", id, userId);
+            return ResponseResult.fail();
         }
     }
 
@@ -76,14 +86,17 @@ public class BlogController {
      */
     @PutMapping("/blog/{id}")
     public Object update(@PathVariable("id") long id, @RequestBody @Validated BlogBody body) {
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = loginUser.getUser().getId();
         Blog blog = new Blog();
         BeanUtils.copyProperties(body, blog);
-        blog.setUserId(1111122);
+        blog.setUserId(userId);
         blog.setId(id);
         int result = blogMapper.updateById(blog);
         if (result > 0) {
-            return ResponseResult.ok("删除成功");
+            return ResponseResult.ok();
         } else {
+            log.error("更新 blog 失败：blogId={} by userId={}", id, userId);
             return ResponseResult.fail("删除失败");
         }
     }

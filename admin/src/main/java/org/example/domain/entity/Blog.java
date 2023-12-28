@@ -1,4 +1,4 @@
-package com.fish.myspringboot.entity;
+package org.example.domain.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,33 +11,21 @@ public class Blog {
     @TableId(value = "id", type = IdType.AUTO)
     private long id;
 
-    /**
-     * 标题
-     */
+    /** 标题 */
     private String title;
 
-    /**
-     * 描述
-     */
+    /** 描述 */
     private String description;
 
-    /**
-     * 内容
-     */
+    /** 内容 */
     private String content;
 
-    /**
-     * 作者 userId
-     */
+    /** 作者 userId */
     private long userId;
 
-    /**
-     * 创建时间
-     */
+    /** 创建时间 */
     private Timestamp createTime;
 
-    /**
-     * 更新时间
-     */
+    /** 更新时间 */
     private Timestamp updateTime;
 }

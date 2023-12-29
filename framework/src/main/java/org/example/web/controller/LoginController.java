@@ -14,23 +14,15 @@ public class LoginController {
     record UsernameLoginBody(String username, String password) {}
     @PostMapping("/login")
     ResponseResult<?> login(@RequestBody UsernameLoginBody body) {
-        try {
-            String token = loginService.login(body.username, body.password);
-            return ResponseResult.ok(token);
-        } catch (Exception e) {
-            return ResponseResult.fail(e.getMessage());
-        }
+        String token = loginService.login(body.username, body.password);
+        return ResponseResult.ok(token);
     }
 
     record PhoneLoginBody(String phone, String smsCode) {}
     @PostMapping("/code/login")
     ResponseResult<?> loginByCode(@RequestBody PhoneLoginBody body) {
-        try {
-            String token = loginService.loginByPhone(body.phone, body.smsCode);
-            return ResponseResult.ok(token);
-        } catch (Exception e) {
-            return ResponseResult.fail(e.getMessage());
-        }
+        String token = loginService.loginByPhone(body.phone, body.smsCode);
+        return ResponseResult.ok(token);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -42,11 +34,7 @@ public class LoginController {
     record SMSCodeBody(String phone) {}
     @PostMapping("/send/smsCode")
     ResponseResult<?> loginByCode(@RequestBody SMSCodeBody body) {
-        try {
-            loginService.sendSmsCodeForLogin(body.phone);
-            return ResponseResult.ok();
-        } catch (Exception e) {
-            return ResponseResult.fail(e.getMessage());
-        }
+        loginService.sendSmsCodeForLogin(body.phone);
+        return ResponseResult.ok();
     }
 }

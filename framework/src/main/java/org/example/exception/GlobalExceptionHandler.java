@@ -74,6 +74,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseResult<String> handleException(Exception e) {
-        return ResponseResult.fail(StatusCode.ERROR, e.getMessage());
+        if (e instanceof ArgumentNotValidException) {
+            return ResponseResult.fail(StatusCode.BAD_PARAM, e.getMessage());
+        }
+        if (e instanceof CommonException) {
+            ResponseResult.fail(StatusCode.ERROR.getCode(), e.getMessage());
+        }
+        return ResponseResult.fail(StatusCode.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 }

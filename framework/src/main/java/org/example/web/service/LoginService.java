@@ -3,6 +3,8 @@ package org.example.web.service;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.entity.User;
 import org.example.domain.model.LoginUser;
+import org.example.exception.ArgumentNotValidException;
+import org.example.exception.CommonException;
 import org.example.mapper.LoginUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,10 +37,10 @@ public class LoginService {
 
     public String login(String username, String password) {
         if (username == null || username.isBlank()) {
-            throw new RuntimeException("用户名不能为空");
+            throw new ArgumentNotValidException("用户名不能为空");
         }
         if (password == null || password.isBlank()) {
-            throw new RuntimeException("密码不能为空");
+            throw new ArgumentNotValidException("密码不能为空");
         }
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -51,19 +53,19 @@ public class LoginService {
 
     public String loginByPhone(String phone, String smsCode) {
         if (phone == null || phone.isBlank()) {
-            throw new RuntimeException("手机号不能为空");
+            throw new ArgumentNotValidException("手机号不能为空");
         }
         if (smsCode == null || smsCode.isBlank()) {
-            throw new RuntimeException("验证码不能为空");
+            throw new ArgumentNotValidException("验证码不能为空");
         }
         User user = loginUserMapper.selectUserByPhone(phone);
         if (user == null) {
             log.warn("用户账号不存在 {}", phone);
-            throw new RuntimeException("用户账号不存在");
+            throw new CommonException("用户账号不存在");
         }
         boolean verified = smsCodeService.verifySmsCode(phone, smsCode, 2);
         if (!verified) {
-            throw new RuntimeException("验证码错误");
+            throw new CommonException("验证码错误");
         }
         // TODO set user Authority
         LoginUser loginUser = new LoginUser(user, null);
@@ -80,12 +82,12 @@ public class LoginService {
 
     public void sendSmsCodeForLogin(String phone) {
         if (phone == null || phone.isBlank()) {
-            throw new RuntimeException("手机号不能为空");
+            throw new ArgumentNotValidException("手机号不能为空");
         }
         User user = loginUserMapper.selectUserByPhone(phone);
         if (user == null) {
             log.warn("用户账号不存在 {}", phone);
-            throw new RuntimeException("用户账号不存在");
+            throw new CommonException("用户账号不存在");
         }
         smsCodeService.sendCodeByLogin(phone);
     }

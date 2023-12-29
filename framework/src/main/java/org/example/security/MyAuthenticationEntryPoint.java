@@ -18,7 +18,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
         ObjectMapper objectMapper = new ObjectMapper();
         response.setContentType("application/json;charset=UTF-8");
         if (authException instanceof BadCredentialsException) {
-            response.getWriter().write(objectMapper.writeValueAsString(ResponseResult.fail(401, "用户密码错误")));
+            response.getWriter().write(objectMapper.writeValueAsString(ResponseResult.fail("用户密码错误")));
             return;
         }
         response.getWriter().write(objectMapper.writeValueAsString(ResponseResult.fail(StatusCode.UNAUTHORIZED)));

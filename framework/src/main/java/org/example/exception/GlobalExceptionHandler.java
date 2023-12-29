@@ -15,6 +15,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * 只有 400、500 错误调用 ResponseResult.fail(StatusCode, Data)，详细错误信息在 data 字段中，
+ * 其他错误信息都在 message 中
+ * */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -32,7 +36,7 @@ public class GlobalExceptionHandler {
      * */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseResult<?> handleException(HttpMessageNotReadableException e) {
-        return ResponseResult.fail(StatusCode.BAD_PARAM);
+        return ResponseResult.fail(StatusCode.BAD_PARAM, e);
     }
 
     /**

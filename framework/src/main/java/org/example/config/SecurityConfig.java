@@ -54,7 +54,7 @@ public class SecurityConfig {
                         //  要求 /user/** 只能被具有 USER 权限的用户访问
                         .requestMatchers("/user/**").hasAuthority("USER")
                         // 按 http 方法授权
-                        .requestMatchers(HttpMethod.DELETE).hasAuthority("write")
+                        // .requestMatchers(HttpMethod.DELETE).hasAuthority("write")
                         // 发生页面重定向和 error 也会进行授权，可以直接放行，以允许 Spring MVC 渲染视图
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         // 使用自定义的 Matcher

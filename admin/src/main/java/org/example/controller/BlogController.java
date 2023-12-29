@@ -12,6 +12,7 @@ import org.example.domain.param.BlogBody;
 import org.example.domain.param.BlogQueryParam;
 import org.example.domain.vo.BlogVO;
 import org.example.mapper.BlogMapper;
+import org.example.service.BlogService;
 import org. springframework. beans. BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,9 @@ public class BlogController {
 
     @Autowired
     BlogMapper blogMapper;
+
+    @Autowired
+    BlogService blogService;
 
     /**
      * 查询博客
@@ -69,15 +73,8 @@ public class BlogController {
      */
     @DeleteMapping("/blog/{id}")
     public Object delete(@PathVariable("id") long id) {
-        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        long userId = loginUser.getUser().getId();
-        int result = blogMapper.deleteById(id);
-        if (result > 0) {
-            return ResponseResult.ok();
-        } else {
-            log.error("删除 blog 失败：blogId={} by userId={}", id, userId);
-            return ResponseResult.fail();
-        }
+        boolean ok = blogService.deleteBlogById(id);
+        return ok ? ResponseResult.ok() : ResponseResult.fail(511, "删除失败");
     }
 
     /**

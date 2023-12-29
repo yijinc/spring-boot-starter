@@ -18,7 +18,7 @@ public class LoginController {
             String token = loginService.login(body.username, body.password);
             return ResponseResult.ok(token);
         } catch (Exception e) {
-            return ResponseResult.fail(411, e.getMessage());
+            return ResponseResult.fail(e.getMessage());
         }
     }
 
@@ -29,7 +29,7 @@ public class LoginController {
             String token = loginService.loginByPhone(body.phone, body.smsCode);
             return ResponseResult.ok(token);
         } catch (Exception e) {
-            return ResponseResult.fail(411, e.getMessage());
+            return ResponseResult.fail(e.getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ public class LoginController {
             loginService.sendSmsCodeForLogin(body.phone);
             return ResponseResult.ok();
         } catch (Exception e) {
-            return ResponseResult.fail(412, e.getMessage());
+            return ResponseResult.fail(e.getMessage());
         }
     }
 }

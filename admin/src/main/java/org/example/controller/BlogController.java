@@ -74,7 +74,7 @@ public class BlogController {
     @DeleteMapping("/blog/{id}")
     public Object delete(@PathVariable("id") long id) {
         boolean ok = blogService.deleteBlogById(id);
-        return ok ? ResponseResult.ok() : ResponseResult.fail(511, "删除失败");
+        return ok ? ResponseResult.ok() : ResponseResult.fail("删除失败");
     }
 
     /**

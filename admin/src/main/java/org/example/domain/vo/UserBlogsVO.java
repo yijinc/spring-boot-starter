@@ -1,12 +1,13 @@
-package com.fish.myspringboot.entity.dto;
+package org.example.domain.vo;
 
 import lombok.Data;
-
+import org.example.domain.entity.Blog;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
-public class UserDTO {
-    private long id;
+public class UserBlogsVO {
+    private Long id;
 
     /**
      * 用户名
@@ -32,4 +33,9 @@ public class UserDTO {
      * 更新时间
      */
     private Timestamp updateTime;
+
+    /**
+     * 日志列表
+     */
+    private List<Blog> blogs;
 }

@@ -1,4 +1,5 @@
 package org.example.domain.vo;
+
 import lombok.Data;
 import java.sql.Timestamp;
 

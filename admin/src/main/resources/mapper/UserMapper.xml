@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.mapper.UserMapper">
+
+    <resultMap id="usersBlogResultMap" type="org.example.domain.vo.UserBlogsVO">
+        <id property="id" column="uid" jdbcType="BIGINT" />
+        <collection property="blogs" ofType="org.example.domain.entity.Blog">
+            <id property="id" column="bid" jdbcType="BIGINT" />
+            <result property="createTime" column="bCreateTime" jdbcType="TIMESTAMP" />
+            <result property="updateTime" column="bUpdateTime" jdbcType="TIMESTAMP" />
+        </collection>
+    </resultMap>
+
+<!--    Mybatis一对多查询：联合查询ResultMap映射 无法分页查询    -->
+    <select id="queryUsersBlogs" resultMap="usersBlogResultMap">
+        SELECT u.id as uid, name, phone, email, u.create_time, u.update_time,
+            b.id as bid, title, description, content, user_id, b.create_time as bCreateTime, b.update_time as bUpdateTime
+            FROM t_user u LEFT JOIN t_blog b ON u.id = b.user_id
+        WHERE u.id = #{id}
+    </select>
+
+
+</mapper>

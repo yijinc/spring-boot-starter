@@ -4,7 +4,9 @@ import org.example.domain.ResponseResult;
 import org.example.enums.StatusCode;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,6 +46,13 @@ public class GlobalExceptionHandler {
      * */
     @ExceptionHandler(AuthenticationException.class)
     public ResponseResult<?> handleException(AuthenticationException e) {
+        if (e instanceof UsernameNotFoundException) {
+            // 貌似永远无法捕获 UsernameNotFoundException，UsernameNotFoundException会被AuthenticationException 转化为 BadCredentialsException
+            return ResponseResult.fail(StatusCode.ERROR.getCode(), e.getMessage());
+        }
+        if (e instanceof BadCredentialsException) {
+            return ResponseResult.fail(StatusCode.ERROR.getCode(), e.getMessage());
+        }
         return ResponseResult.fail(StatusCode.UNAUTHORIZED.getCode(), e.getMessage());
     }
 

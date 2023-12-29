@@ -8,7 +8,7 @@ import org.example.util.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
@@ -42,7 +42,7 @@ public class SmsCodeService {
         smsCode.setPhone(phone);
         smsCode.setType(type);
         smsCode.setAuthStatus(1);
-        smsCode.setCreateTime(LocalDateTime.now());
+        smsCode.setCreateTime(new Timestamp(System.currentTimeMillis()));
         log.info("手机号登录：{}，发送验证码为：{}", phone, code);
         int result = smsCodeMapper.insert(smsCode);
         if (result < 1) {

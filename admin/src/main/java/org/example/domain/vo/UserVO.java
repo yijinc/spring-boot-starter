@@ -1,14 +1,11 @@
-package com.fish.myspringboot.entity.vo;
+package org.example.domain.vo;
 
-import com.fish.myspringboot.entity.Blog;
 import lombok.Data;
-
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 public class UserVO {
-    private Long id;
+    private long id;
 
     /**
      * 用户名
@@ -34,9 +31,4 @@ public class UserVO {
      * 更新时间
      */
     private Timestamp updateTime;
-
-    /**
-     * 日志列表
-     */
-    private List<Blog> blogs;
 }

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @TableName("t_sms_verify")
@@ -31,7 +31,7 @@ public class SmsCode implements Serializable {
     private int authStatus;
 
     /** 验证码创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /** 平台 */
     private String platform;

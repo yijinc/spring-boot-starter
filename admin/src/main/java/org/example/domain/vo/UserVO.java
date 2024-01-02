@@ -8,6 +8,7 @@ public class UserVO {
     private long id;
 
     /**
+     * 字段注释1
      * 用户名
      */
     private String name;

@@ -31,8 +31,9 @@ public class BlogController {
     BlogService blogService;
 
     /**
-     * 查询博客
-     * 分页查询博客列表
+     * 接口名称：查询博客
+     * 接口说明：分页查询博客列表
+     * @return ResponseResult<Page<BlogVO>>
      */
     @GetMapping("/blogs")
     public ResponseResult<Page<BlogVO>> getBlogs(BlogQueryParam params) {

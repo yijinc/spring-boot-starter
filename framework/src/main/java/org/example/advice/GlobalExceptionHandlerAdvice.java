@@ -85,6 +85,7 @@ public class GlobalExceptionHandlerAdvice {
 
     @ExceptionHandler
     public ResponseResult<String> handleException(Exception e) {
+        // for Custom Exception
         if (e instanceof ArgumentNotValidException) {
             return ResponseResult.fail(StatusCode.BAD_PARAM, e.getMessage());
         }

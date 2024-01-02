@@ -2,6 +2,7 @@ package org.example.domain.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,11 +17,13 @@ public class User implements Serializable {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空")
     private String name;
 
     /**
      * 手机号
      */
+    @NotBlank(message = "手机号不能为空")
     private String phone;
 
     /**

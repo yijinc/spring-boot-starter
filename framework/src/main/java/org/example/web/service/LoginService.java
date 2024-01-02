@@ -36,12 +36,6 @@ public class LoginService {
     private AuthenticationManager authenticationManager;
 
     public String login(String username, String password) {
-        if (username == null || username.isBlank()) {
-            throw new ArgumentNotValidException("用户名不能为空");
-        }
-        if (password == null || password.isBlank()) {
-            throw new ArgumentNotValidException("密码不能为空");
-        }
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         if (authentication == null) {
@@ -52,12 +46,6 @@ public class LoginService {
     }
 
     public String loginByPhone(String phone, String smsCode) {
-        if (phone == null || phone.isBlank()) {
-            throw new ArgumentNotValidException("手机号不能为空");
-        }
-        if (smsCode == null || smsCode.isBlank()) {
-            throw new ArgumentNotValidException("验证码不能为空");
-        }
         User user = loginUserMapper.selectUserByPhone(phone);
         if (user == null) {
             log.warn("用户账号不存在 {}", phone);
@@ -81,9 +69,6 @@ public class LoginService {
     }
 
     public void sendSmsCodeForLogin(String phone) {
-        if (phone == null || phone.isBlank()) {
-            throw new ArgumentNotValidException("手机号不能为空");
-        }
         User user = loginUserMapper.selectUserByPhone(phone);
         if (user == null) {
             log.warn("用户账号不存在 {}", phone);

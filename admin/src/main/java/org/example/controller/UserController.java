@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -48,7 +48,7 @@ public class UserController {
      * @return int
      */
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ResponseResult<?> createUser(@RequestBody User user) {
+    public ResponseResult<?> createUser(@RequestBody @Validated User user) {
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Timestamp now = new Timestamp(new Date().getTime());
         String password = user.getPassword();

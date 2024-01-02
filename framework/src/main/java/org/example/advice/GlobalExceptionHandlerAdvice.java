@@ -1,7 +1,9 @@
-package org.example.exception;
+package org.example.advice;
 
 import org.example.domain.ResponseResult;
 import org.example.enums.StatusCode;
+import org.example.exception.ArgumentNotValidException;
+import org.example.exception.CommonException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
  * 其他错误信息都在 message 中
  * */
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandlerAdvice {
 
     /**
      * 处理参数校验不通过

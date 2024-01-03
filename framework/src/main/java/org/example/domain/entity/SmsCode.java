@@ -51,8 +51,4 @@ public class SmsCode implements Serializable {
      * 平台
      */
     private String platform;
-
-    public static enum SmsType {
-
-    }
 }

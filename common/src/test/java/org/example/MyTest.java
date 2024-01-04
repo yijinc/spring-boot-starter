@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.util.JwtUtil;
 import java.util.Date;
+import java.util.UUID;
 
 
 public class MyTest {
@@ -29,8 +30,13 @@ public class MyTest {
 //        StringBuilder stringBuilder = new StringBuilder("0123345678");
 //        System.out.println(stringBuilder.substring(2,6));
 
-        System.out.println(new Date().getTime());
-        System.out.println(System.currentTimeMillis());
+//        System.out.println(new Date().getTime());
+//        System.out.println(System.currentTimeMillis());
+
+        UUID uuid = UUID.randomUUID();
+        UUID uuid1 = new UUID(12L,12L);
+        System.out.println(uuid);
+        System.out.println(uuid1);
 
     }
 

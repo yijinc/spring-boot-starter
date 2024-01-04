@@ -15,6 +15,7 @@ import org.example.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -62,8 +63,14 @@ public class RepeatSubmitAspect {
             isRepeated = Boolean.FALSE.equals(redisTemplate.opsForValue().setIfAbsent(key, "1", repeatSubmit.intervalTime(), TimeUnit.MILLISECONDS));
         } else {
             /*
-             * TODO 请求token 校验重复
+             * 请求 token 校验重复 key = repeat_submit:request_token
              */
+            String requestToken = request.getHeader("request_token");
+            if (!StringUtils.hasText(requestToken)) {
+                throw new RepeatSubmitException("该请求需要携带 request_token header");
+            }
+            String key = "repeat_submit:" + requestToken;
+            isRepeated = Boolean.FALSE.equals(redisTemplate.delete(key)); // 删除成功表示正常访问 不是重复的
         }
         if (isRepeated) {
             throw new RepeatSubmitException("请求过于频繁，请稍候再试");

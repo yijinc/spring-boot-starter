@@ -37,7 +37,7 @@ public class TokenService {
      * @param request
      * @return token
      */
-    private String getToken(HttpServletRequest request) {
+    public String getToken(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
         if (token != null && !token.isBlank() && token.startsWith(TOKEN_PREFIX)) {
             token = token.replace(TOKEN_PREFIX, "");

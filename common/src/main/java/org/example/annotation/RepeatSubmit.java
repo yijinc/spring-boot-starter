@@ -29,5 +29,5 @@ public @interface RepeatSubmit {
     /**
      * 重复请求间隔时间 for Type.PARAM
      */
-    long intervalTime() default 2 * 60 * 1000;
+    long intervalTime() default 2 * 1000;
 }

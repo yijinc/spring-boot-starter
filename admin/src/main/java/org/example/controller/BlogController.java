@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.example.annotation.RepeatSubmit;
 import org.example.domain.ResponseResult;
 import org.example.domain.entity.Blog;
 import org.example.domain.model.LoginUser;
@@ -36,6 +37,7 @@ public class BlogController {
      * @return ResponseResult<Page<BlogVO>>
      */
     @GetMapping("/blogs")
+    @RepeatSubmit
     public ResponseResult<Page<BlogVO>> getBlogs(BlogQueryParam params) {
         Page<BlogVO> page = new Page<>();
         page.setCurrent(params.getCurrent());
@@ -53,6 +55,7 @@ public class BlogController {
      * 新增
      */
     @PostMapping("/blog")
+    @RepeatSubmit
     public ResponseResult<?> create(@RequestBody @Validated BlogBody body) {
         Blog blog = new Blog();
         BeanUtils.copyProperties(body, blog);

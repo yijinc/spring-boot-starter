@@ -55,7 +55,7 @@ public class BlogController {
      * 新增
      */
     @PostMapping("/blog")
-    @RepeatSubmit
+    @RepeatSubmit(type = RepeatSubmit.Type.TOKEN)
     public ResponseResult<?> create(@RequestBody @Validated BlogBody body) {
         Blog blog = new Blog();
         BeanUtils.copyProperties(body, blog);

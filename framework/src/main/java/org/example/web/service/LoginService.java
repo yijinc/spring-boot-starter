@@ -3,7 +3,6 @@ package org.example.web.service;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.entity.User;
 import org.example.domain.model.LoginUser;
-import org.example.exception.ArgumentNotValidException;
 import org.example.exception.CommonException;
 import org.example.mapper.LoginUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

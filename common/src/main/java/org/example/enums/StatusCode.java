@@ -15,6 +15,7 @@ public enum StatusCode {
     NOT_FOUND(404, "路径未找到"),
     METHOD_NOT_ALLOWED(405, "请求方法不支持"),
     REQUEST_TIMEOUT(408, "请求超时"),
+    REPEAT_SUBMIT(444, "重复提交"),
     INTERNAL_SERVER_ERROR(500, "内部服务错误"),
     NOT_IMPLEMENTED(501, "接口未实现"),
     BAD_GATEWAY(502, "服务暂无法响应"),

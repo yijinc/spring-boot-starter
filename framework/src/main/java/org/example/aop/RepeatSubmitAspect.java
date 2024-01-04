@@ -66,7 +66,7 @@ public class RepeatSubmitAspect {
              */
         }
         if (isRepeated) {
-            throw new RepeatSubmitException("访问过于频繁，请稍候再试");
+            throw new RepeatSubmitException("请求过于频繁，请稍候再试");
         }
     }
 

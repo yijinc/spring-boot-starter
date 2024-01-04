@@ -2,7 +2,6 @@ package org.example.advice;
 
 import org.example.domain.ResponseResult;
 import org.example.enums.StatusCode;
-import org.example.exception.ArgumentNotValidException;
 import org.example.exception.CommonException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -83,15 +82,19 @@ public class GlobalExceptionHandlerAdvice {
         return ResponseResult.fail(StatusCode.METHOD_NOT_ALLOWED);
     }
 
+    /**
+     * 自定义异常处理
+     * */
+    @ExceptionHandler(CommonException.class)
+    public ResponseResult<?> handleException(CommonException e) {
+        return ResponseResult.fail(e.getCode(), e.getMessage());
+    }
+
+    /**
+     * 其他非预期错误 500
+     * */
     @ExceptionHandler
     public ResponseResult<String> handleException(Exception e) {
-        // for Custom Exception
-        if (e instanceof ArgumentNotValidException) {
-            return ResponseResult.fail(StatusCode.BAD_PARAM, e.getMessage());
-        }
-        if (e instanceof CommonException) {
-            ResponseResult.fail(StatusCode.ERROR.getCode(), e.getMessage());
-        }
         return ResponseResult.fail(StatusCode.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 }

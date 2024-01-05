@@ -1,4 +1,5 @@
 package org.example.domain.entity;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -6,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("t_user")
@@ -44,12 +45,12 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    private Timestamp createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Timestamp updateTime;
+    private Date updateTime;
 
     /**
      * 创建人

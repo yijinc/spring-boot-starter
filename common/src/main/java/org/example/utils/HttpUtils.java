@@ -1,10 +1,13 @@
 package org.example.utils;
 
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -12,6 +15,8 @@ import java.util.Objects;
  * 处理 Http Request
  * */
 public class HttpUtils {
+
+    private HttpUtils() {}
 
     /**
      * 获取客户端IP
@@ -72,5 +77,33 @@ public class HttpUtils {
             }
         }
         return ip.substring(0, 255);
+    }
+
+    /**
+     * 获取请求中的请求体参数
+     * ⚠️ 注：request.getInputStream()、request.getReader() 只能被调用使用一次，否则报 IOException
+     * @return String
+     */
+    public static String getRequestBody(ServletRequest request) {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = request.getReader();
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            System.out.println("getRequestBody 获取异常" + e);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.out.println("getRequestBody 流关闭异常" + e);
+                }
+            }
+        }
+        return sb.toString();
     }
 }

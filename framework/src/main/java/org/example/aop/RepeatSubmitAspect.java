@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.example.annotation.RepeatSubmit;
 import org.example.exception.RepeatSubmitException;
-import org.example.util.IpUtils;
+import org.example.utils.HttpUtils;
 import org.example.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -53,7 +53,7 @@ public class RepeatSubmitAspect {
             * 请求参数校验重复 key = repeat_submit:ip:token:method/uri:param:body
             */
             ObjectMapper mapper = new ObjectMapper();
-            String ipAddr = IpUtils.getIpAddr(request);
+            String ipAddr = HttpUtils.getIpAddr(request);
             String token = tokenService.getToken(request);
             String api = request.getMethod() + request.getRequestURI();
             String param = mapper.writeValueAsString(request.getParameterMap());

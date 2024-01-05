@@ -1,4 +1,4 @@
-package org.example.util;
+package org.example.utils;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;

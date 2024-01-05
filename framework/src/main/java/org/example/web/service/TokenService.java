@@ -2,8 +2,8 @@ package org.example.web.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.domain.model.LoginUser;
-import org.example.util.IpUtils;
-import org.example.util.JwtUtil;
+import org.example.utils.HttpUtils;
+import org.example.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -79,7 +79,7 @@ public class TokenService {
         long now = new Date().getTime();
         // 记录用户登录信息
         loginUser.setToken(token);
-        loginUser.setLoginIp(IpUtils.getIpAddr());
+        loginUser.setLoginIp(HttpUtils.getIpAddr());
         loginUser.setLoginTime(now);
         loginUser.setExpireTime(new Date(now + TOKEN_EXPIRATION).getTime());
         // 保存到 redis
